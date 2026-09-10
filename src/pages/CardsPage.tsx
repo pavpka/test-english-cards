@@ -1,8 +1,11 @@
+import CardList from "../components/CardList";
+
 export default function CardsPage() {
   
     return (
       <>
-      <div>cards</div>
+      <div>card section</div>
+      <CardList/>
        </>
     )
   }
