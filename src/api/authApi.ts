@@ -5,7 +5,8 @@ export type User = {
 
 type AuthResponse = {
     isAllowed: boolean,
-    token: string | null
+    token: string | null,
+    user: string
 }
 
 const mockUser: User = {
@@ -20,7 +21,7 @@ export function authUser(user: User): Promise<AuthResponse> {
                 user.username === mockUser.username &&
                 user.password === mockUser.password
 
-            resolve({isAllowed, token: 'abc' })
+            resolve({isAllowed, token: 'abc', user: 'Admin' })
         }, 1000)
     })
 }

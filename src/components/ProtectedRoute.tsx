@@ -3,13 +3,13 @@ import { useAppSelector } from '../store/hooks'
 import { selectIsAuthenticated } from '../store/authSlice'
 
 const ProtectedRoute = () => {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+    const isAuthenticated = useAppSelector(selectIsAuthenticated)
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
-  }
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />
+    }
 
-  return <Outlet />
+    return <Outlet />
 }
 
 export default ProtectedRoute

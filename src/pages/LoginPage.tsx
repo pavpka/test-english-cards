@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isCorret, setCorrect] = useState(true);
   const isDisabled = !username.trim() || !password.trim();
 
 //   const state = useAppSelector((state) => state.auth);
@@ -22,9 +23,10 @@ export default function LoginPage() {
     authUser({ username, password })
       .then((resp) => {
         if (resp.isAllowed) {
-          dispatch(login({token: resp.token}));
+          dispatch(login({token: resp.token, username: resp.user}));
           navigate("/");
         } else {
+			setCorrect(false);
 			console.log('неверный логин/пароль')
 		}	
       })
@@ -40,29 +42,31 @@ export default function LoginPage() {
     <div>
 		{(isLoading) 
 			? <div>loading...</div>
-			: <form onSubmit={handleSubmit}>
-				username:
-				<input
-				name="username"
-				value={username}
-				onChange={(e) => setUserName(e.target.value)}
-				type="text"
-				placeholder="username"
-				/>
-				<br />
-				password:
-				<input
-				name="password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-				type="password"
-				placeholder="password"
-				/>
-				<br />
-				<button type="submit" disabled={isDisabled}>
-				Submit
-				</button>
-			</form>
+			: <div> {!isCorret && <div>неверно</div>}
+				<form onSubmit={handleSubmit}>
+					username:
+					<input
+					name="username"
+					value={username}
+					onChange={(e) => setUserName(e.target.value)}
+					type="text"
+					placeholder="username"
+					/>
+					<br />
+					password:
+					<input
+					name="password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					type="password"
+					placeholder="password"
+					/>
+					<br />
+					<button type="submit" disabled={isDisabled}>
+					Submit
+					</button>
+				</form>
+			</div>
 		}
     </div>
   );
