@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { authUser } from "../api/authApi";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { login } from "../store/authSlice";
+import { setName } from "../store/userSlice";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function LoginPage() {
       .then((resp) => {
         if (resp.isAllowed) {
           dispatch(login({token: resp.token, username: resp.user}));
+		  dispatch(setName({name: resp.user}))
           navigate("/");
         } else {
 			setCorrect(false);

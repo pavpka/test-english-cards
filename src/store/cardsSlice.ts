@@ -16,7 +16,7 @@ const CardsSlice = createSlice({
         },
         pick: (state, action) => {
             const card = state.find(item => item.id === action.payload.id)
-            if (card) card.picked = true;
+            if (card) card.picked = !card.picked;
         }
     }
 })

@@ -8,18 +8,17 @@ export default function Card({card} : {card : CardsState}) {
     const handleClick = (id: number) => {
         console.log(id);
         dispatch(pick({id: id}));
-        setPicked(true);
+        setPicked((prev) => !prev);
     }
 
     return (
-        <div style={{border: '1px solid white'}} onClick={() => handleClick(card.id)}>
-            {isPicked ? (<div>picked</div>) : ( <>
+        <div style={{border: '1px solid white'}}>
+            {isPicked ? (<div>translation: {card.translation}</div>) : ( <>
                 <div>word: {card.word}</div>
                 <div>{card.pathOfSpeech}</div>
-                <div>exaple: {card.example}</div>
-                <div>translation: {card.translation}</div>
+                <div>example: {card.example}</div>
                 </>)}
-            
+            <button onClick={() => handleClick(card.id)}>{isPicked ? "GET BACK" : "LEARN MORE"}</button>
         </div>
     )
 }

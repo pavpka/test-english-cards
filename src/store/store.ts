@@ -2,6 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { baseApi } from '../api/baseApi'
 import authReducer from './authSlice'
 import cardsReducer from './cardsSlice'
+import userReducer from './userSlice'
 
 const appSlice = createSlice({
   name: 'app',
@@ -12,6 +13,7 @@ const appSlice = createSlice({
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    user: userReducer,
     cards: cardsReducer,
     app: appSlice.reducer,
     [baseApi.reducerPath]: baseApi.reducer,

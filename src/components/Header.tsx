@@ -6,11 +6,7 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import PublicRoute from "./PublicRoute";
 
-export default function Header({isAuthenticated, username} : any) {
-
-    console.log('name: ', username);
-
-    
+export default function Header({isAuthenticated, username} : any) {    
     return (
         <>
         <nav>
