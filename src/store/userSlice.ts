@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type User = {
     name: string,
@@ -16,15 +16,15 @@ const UserSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setName: (state, action) => {
+        setName: (state, action: PayloadAction<{ name: string }>) => {
             state.name = action.payload.name;
         },
-        setDate: (state, action) => {
+        setDate: (state, action: PayloadAction<{ date: string }>) => {
             const date = new Date(action.payload.date)
             state.dateOfBirth = date.toDateString();
 
         },
-        setGender: (state, action) => {
+        setGender: (state, action: PayloadAction<{ gender: User['gender'] }>) => {
             state.gender = action.payload.gender;
         }
     }

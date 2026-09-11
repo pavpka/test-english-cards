@@ -3,4 +3,9 @@
   flex-direction: column;
   flex-grow: 1;
   min-height: 100%;
+
+  &__not-found {
+    padding: 48px 24px;
+    color: var(--text-h);
+  }
 }

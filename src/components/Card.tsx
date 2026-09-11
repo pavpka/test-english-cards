@@ -1,18 +1,15 @@
-import { useState } from "react";
 import "./Card.scss";
 import { pick, type CardsState } from "../store/cardsSlice";
 import { useAppDispatch } from "../store/hooks";
 
 export default function Card({card} : {card : CardsState}) {
     const dispatch = useAppDispatch();
-    const [isPicked, setPicked] = useState(card.picked)
     const handleClick = (id: number) => {
         dispatch(pick({id: id}));
-        setPicked((prev) => !prev);
     }
 
     return (
-        <div className={`card${isPicked ? " card--picked" : ""}`}>
+        <div className={`card${card.picked ? " card--picked" : ""}`}>
             <div className="card__inner">
                 <div className="card__face card__face--front">
                     <div className="card__header">{card.wordOfTheDay && "Word of the Day"}</div>

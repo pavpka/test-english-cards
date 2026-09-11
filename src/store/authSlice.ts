@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 const token = localStorage.getItem('token');
 
@@ -18,7 +18,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state, action: PayloadAction<{ token: string, username: string }>) => {
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.username = action.payload.username;

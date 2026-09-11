@@ -5,7 +5,7 @@ export type User = {
 
 type AuthResponse = {
     isAllowed: boolean,
-    token: string | null,
+    token: string,
     user: string
 }
 

@@ -1,25 +1,14 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { baseApi } from '../api/baseApi'
+import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './authSlice'
 import cardsReducer from './cardsSlice'
 import userReducer from './userSlice'
-
-const appSlice = createSlice({
-  name: 'app',
-  initialState: {},
-  reducers: {},
-})
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
     cards: cardsReducer,
-    app: appSlice.reducer,
-    [baseApi.reducerPath]: baseApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
