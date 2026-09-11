@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+
+  &__link {
+    color: var(--text-h);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+
+    &:hover {
+      background: var(--accent-bg);
+      box-shadow: var(--shadow);
+    }
+
+    &--active {
+      color: var(--accent);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      font-weight: 500;
+    }
+  }
+
+  &__not-found {
+    padding: 48px 24px;
+    color: var(--text-h);
+  }
+}

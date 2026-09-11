@@ -1,0 +1,13 @@
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__loader {
+    flex: 1 0 100%;
+    color: var(--text);
+  }
+}

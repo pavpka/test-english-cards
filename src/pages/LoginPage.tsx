@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./LoginPage.scss";
 import { useNavigate } from "react-router-dom";
 import { authUser } from "../api/authApi";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -41,30 +42,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="login-page">
 		{(isLoading) 
-			? <div>loading...</div>
-			: <div> {!isCorret && <div>неверно</div>}
-				<form onSubmit={handleSubmit}>
+			? <div className="login-page__status">loading...</div>
+			: <div className="login-page__content"> {!isCorret && <div className="login-page__error">неверно</div>}
+				<form className="login-page__form" onSubmit={handleSubmit}>
+					<label className="login-page__field">
 					username:
 					<input
+					className="login-page__input"
 					name="username"
 					value={username}
 					onChange={(e) => setUserName(e.target.value)}
 					type="text"
 					placeholder="username"
 					/>
-					<br />
+					</label>
+					<label className="login-page__field">
 					password:
 					<input
+					className="login-page__input"
 					name="password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					type="password"
 					placeholder="password"
 					/>
-					<br />
-					<button type="submit" disabled={isDisabled}>
+					</label>
+					<button className="login-page__submit" type="submit" disabled={isDisabled}>
 					Submit
 					</button>
 				</form>

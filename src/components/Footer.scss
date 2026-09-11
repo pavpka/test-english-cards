@@ -1,0 +1,38 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: auto;
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__title {
+    color: var(--text-h);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  &__link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+}

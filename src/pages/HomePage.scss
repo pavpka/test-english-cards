@@ -1,0 +1,13 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 48px 24px;
+
+  &__title {
+    color: var(--text-h);
+    font-size: 32px;
+  }
+}

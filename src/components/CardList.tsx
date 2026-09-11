@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./CardList.scss";
 import Card from "./Card";
 import { getCards} from "../api/cardsApi";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -21,11 +22,11 @@ export default function CardList() {
     }, [storedCards, dispatch])
 
     return (
-        <>
+        <div className="card-list">
         {isLoading 
-        ?  (<div>card list is loading...</div>)
+        ?  (<div className="card-list__loader">card list is loading...</div>)
         : (storedCards.map((card) => <Card key={card.id} card = {card}/>))
         }   
-        </>
+        </div>
     )
 }

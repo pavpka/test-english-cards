@@ -1,3 +1,5 @@
+import "./Footer.scss";
+
 export type Contacts = {
 	label: string
 	links: {
@@ -9,19 +11,19 @@ export type Contacts = {
 export function Footer ({contacts} : {contacts : Contacts }) {
 
     return (
-        <>
+        <footer className="footer">
         {contacts.map((element) => {
             return (
-                <div key={element.label}>
-                    <div>{element.label}</div>
+                <div className="footer__column" key={element.label}>
+                    <div className="footer__title">{element.label}</div>
                     {element.links.map ((link, linkIndex) => { return (
-                        <a key={linkIndex} href={link.url} target="blank">
+                        <a className="footer__link" key={linkIndex} href={link.url} target="blank">
                         {link.label}
                         </a>
                     );})}
                 </div>
             )
         })}
-        </>
+        </footer>
     )
 }

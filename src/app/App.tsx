@@ -1,4 +1,4 @@
-import '../App.css'
+import './App.scss'
 import Header from '../components/Header'
 import { Footer, type Contacts } from '../components/Footer'
 import { useAppSelector } from '../store/hooks'
@@ -26,11 +26,11 @@ const contacts: Contacts = [
 function App() {
   	const { isAuthenticated, username } = useAppSelector((state) => state.auth);
 	return (
-		<>
+		<div className="app">
 		<Header isAuthenticated = {isAuthenticated}
 				username = {username}/>
 		<Footer contacts = {contacts}/>
-		</>
+		</div>
 	)
 }
 

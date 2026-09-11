@@ -4,7 +4,7 @@ export type CardResponse = {
     id: number,
     wordOfTheDay: boolean,
     word: string,
-    pathOfSpeech: string,
+    partOfSpeech: string,
     example: string,
     translation: string
 
