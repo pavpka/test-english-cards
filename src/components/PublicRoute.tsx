@@ -6,7 +6,7 @@ const PublicRoute = () => {
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
     if (isAuthenticated) {
-        return <Navigate to="/profile" replace />;
+        return <Navigate to="/" replace />;
     }
 
     return <Outlet />;

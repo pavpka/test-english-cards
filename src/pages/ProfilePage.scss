@@ -52,6 +52,31 @@
       letter-spacing: 1px;
       font-size: 16px;
     }
+
+    &--range {
+      flex: 1;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      accent-color: var(--accent);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__range {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__range-bound {
+    color: var(--text);
+    font-size: 14px;
+    min-width: 1.2em;
   }
 
   &__radiogroup {
@@ -63,6 +88,7 @@
 
   &__radio-label {
     color: var(--text-h);
+    margin-right: 18px;
   }
 
   &__dropdown {

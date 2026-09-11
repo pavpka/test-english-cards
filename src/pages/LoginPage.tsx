@@ -27,7 +27,7 @@ export default function LoginPage() {
         if (resp.isAllowed) {
           dispatch(login({token: resp.token, username: resp.user}));
 		  dispatch(setName({name: resp.user}))
-          navigate("/");
+          navigate("/", { replace: true });
         } else {
 			setCorrect(false);
 			console.log('неверный логин/пароль')
@@ -44,7 +44,7 @@ export default function LoginPage() {
   return (
     <div className="login-page">
 		{(isLoading) 
-			? <div className="login-page__status">loading...</div>
+			? <div className="login-page__status">авторизация...</div>
 			: <div className="login-page__content"> {!isCorret && <div className="login-page__error">неверно</div>}
 				<form className="login-page__form" onSubmit={handleSubmit}>
 					<label className="login-page__field">

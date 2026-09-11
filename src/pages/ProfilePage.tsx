@@ -3,13 +3,29 @@ import "./ProfilePage.scss";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setDate, setGender, setName } from "../store/userSlice";
 
+const DEFAULT_SELECT = "Выберете элемент";
+const mainOptions = ['Красный', 'Синий', 'Желтый'];
+const extraOptions = ['Вариант 1', 'Вариант 2', 'Вариант 3'];
+const AUTO_COLOR = '#aa3bff';
+const AUTO_TEXT = 'Hello world';
+
+const currentMonthValue = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+};
+
 export default function ProfilePage() {
     const { name } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState("Выберете элемент");
-    const options = ['Элемент 1', 'Элемент 2', 'Элемент 3'];
+    const [isMainOpen, setIsMainOpen] = useState(false);
+    const [mainSelected, setMainSelected] = useState(DEFAULT_SELECT);
+    const [isExtraOpen, setIsExtraOpen] = useState(false);
+    const [extraSelected, setExtraSelected] = useState(DEFAULT_SELECT);
     const [cardFieldValue, setCardFieldValue] = useState('');
+    const [isExtraOn, setIsExtraOn] = useState(false);
+    const [month, setMonth] = useState('');
+    const [color, setColor] = useState('#000000');
+    const [extraText, setExtraText] = useState('');
 
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -26,8 +42,14 @@ export default function ProfilePage() {
         form.reset();
         form.username.value = usernameValue;
         setCardFieldValue('');
-        setSelectedValue("Выберете элемент");
-        setIsOpen(false);
+        setMainSelected(DEFAULT_SELECT);
+        setExtraSelected(DEFAULT_SELECT);
+        setIsMainOpen(false);
+        setIsExtraOpen(false);
+        setIsExtraOn(false);
+        setMonth('');
+        setColor('#000000');
+        setExtraText('');
     }
 
     const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,15 +58,16 @@ export default function ProfilePage() {
         if (Number(value) < 0) e.target.value = '0';
     }
 
-    const handleSelect = (value: string) => {
-        setIsOpen(false);
-        setSelectedValue(value)
-    }
-
     const handleToggle = (e : React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-        console.log('toggle on');
-        } else console.log('toggle off');
+        const checked = e.target.checked;
+        setIsExtraOn(checked);
+        if (checked) {
+            setMonth(currentMonthValue());
+            setColor(AUTO_COLOR);
+            setExtraSelected(extraOptions[0]);
+            setIsExtraOpen(false);
+            setExtraText(AUTO_TEXT);
+        }
     }
 
     const handleCardValueChange = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -70,12 +93,15 @@ export default function ProfilePage() {
         <fieldset className="profile-page__field profile-page__field--group">
             <legend className="profile-page__label">Пол</legend>
             <div className="profile-page__radiogroup" role="radiogroup">
-                <label className="profile-page__radio-label" htmlFor="gOpt1">a</label>
+                
                 <input className="profile-page__radio" type="radio" id="gOpt1" name="gender" value="W"/>
-                <label className="profile-page__radio-label" htmlFor="gOpt2">b</label>
+                <label className="profile-page__radio-label" htmlFor="gOpt1">Женский</label>
+                
                 <input className="profile-page__radio" type="radio" id="gOpt2" name="gender" value="M"/>
-                <label className="profile-page__radio-label" htmlFor="gOpt3">-</label>
+                <label className="profile-page__radio-label" htmlFor="gOpt2">Мужской</label>
+                
                 <input className="profile-page__radio" type="radio" id="gOpt3" name="gender" value="null" defaultChecked/>
+                <label className="profile-page__radio-label" htmlFor="gOpt3">Не указывать</label>
             </div>
         </fieldset>
         <div className="profile-page__field">
@@ -96,16 +122,20 @@ export default function ProfilePage() {
         </div>
         <div className="profile-page__field">
             <label className="profile-page__label" htmlFor="level">Уровень</label>
-            <input className="profile-page__input" id="level" type="range" min="0" max="10"/>
+            <div className="profile-page__range">
+                <span className="profile-page__range-bound">0</span>
+                <input className="profile-page__input profile-page__input--range" id="level" type="range" min="0" max="10"/>
+                <span className="profile-page__range-bound">10</span>
+            </div>
         </div>
         <div className="profile-page__field">
             <span className="profile-page__label" id="dropdownLabel">Выбор</span>
             <div className="profile-page__dropdown">
-                <button className="profile-page__select" type="button" aria-labelledby="dropdownLabel" onClick={() => setIsOpen((prev) => !prev)}>{selectedValue} {isOpen ? '▲' : '▼'}</button>
-                {isOpen && (
+                <button className="profile-page__select" type="button" aria-labelledby="dropdownLabel" onClick={() => setIsMainOpen((prev) => !prev)}>{mainSelected} {isMainOpen ? '▲' : '▼'}</button>
+                {isMainOpen && (
                     <ul className="profile-page__menu">
-                        {options.map((option) => (
-                            <li className="profile-page__option" key={option} onClick={() => handleSelect(option)}>{option}</li>
+                        {mainOptions.map((option) => (
+                            <li className="profile-page__option" key={option} onClick={() => { setMainSelected(option); setIsMainOpen(false); }}>{option}</li>
                         ))}
                     </ul>
                 )}
@@ -119,7 +149,7 @@ export default function ProfilePage() {
         <div className="profile-page__field">
             <label className="profile-page__label" htmlFor="toggleInput">Дополнительно</label>
             <label className="profile-page__toggle">
-                <input className="profile-page__toggle-input" type="checkbox" id="toggleInput" onChange={handleToggle}/>
+                <input className="profile-page__toggle-input" type="checkbox" id="toggleInput" checked={isExtraOn} onChange={handleToggle}/>
                 <span className="profile-page__toggle-slider"></span>
             </label>
         </div>
@@ -128,7 +158,7 @@ export default function ProfilePage() {
         <div className="profile-page__extra"> 
             <div className="profile-page__field">
                 <label className="profile-page__label" htmlFor="month">Месяц</label>
-                <input className="profile-page__input" id="month" type="month" placeholder="2026-09"/>
+                <input className="profile-page__input" id="month" type="month" placeholder="2026-09" value={month} disabled={isExtraOn} onChange={(e) => setMonth(e.target.value)}/>
             </div>
             <div className="profile-page__field">
                 <label className="profile-page__label" htmlFor="website">Сайт</label>
@@ -136,16 +166,16 @@ export default function ProfilePage() {
             </div>
             <div className="profile-page__field">
                 <label className="profile-page__label" htmlFor="color">Цвет</label>
-                <input className="profile-page__input" id="color" type="color"/>
+                <input className="profile-page__input" id="color" type="color" value={color} onChange={(e) => setColor(e.target.value)}/>
             </div>
             <div className="profile-page__field">
                 <span className="profile-page__label" id="extraDropdownLabel">Дополнительный выбор</span>
                 <div className="profile-page__dropdown">
-                    <button className="profile-page__select" type="button" aria-labelledby="extraDropdownLabel" onClick={() => setIsOpen((prev) => !prev)}>{selectedValue} {isOpen ? '▲' : '▼'}</button>
-                    {isOpen && (
+                    <button className="profile-page__select" type="button" aria-labelledby="extraDropdownLabel" onClick={() => setIsExtraOpen((prev) => !prev)}>{extraSelected} {isExtraOpen ? '▲' : '▼'}</button>
+                    {isExtraOpen && (
                         <ul className="profile-page__menu">
-                            {options.map((option) => (
-                                <li className="profile-page__option" key={option} onClick={() => handleSelect(option)}>{option}</li>
+                            {extraOptions.map((option) => (
+                                <li className="profile-page__option" key={option} onClick={() => { setExtraSelected(option); setIsExtraOpen(false); }}>{option}</li>
                             ))}
                         </ul>
                     )}
@@ -153,16 +183,20 @@ export default function ProfilePage() {
             </div>
             <div className="profile-page__field">
                 <label className="profile-page__label" htmlFor="extraText">Текст</label>
-                <input className="profile-page__input" id="extraText" type="text"/>
+                <input className="profile-page__input" id="extraText" type="text" value={extraText} disabled={isExtraOn} onChange={(e) => setExtraText(e.target.value)}/>
             </div>
-            <div className="profile-page__field">
-                <label className="profile-page__label" htmlFor="extraNumber">Число</label>
-                <input className="profile-page__input" id="extraNumber" type="number"/>
-            </div>
-            <div className="profile-page__field">
-                <label className="profile-page__label" htmlFor="file">Файл</label>
-                <input className="profile-page__input" id="file" type="file"/>
-            </div>
+            {!isExtraOn && (
+                <>
+                    <div className="profile-page__field">
+                        <label className="profile-page__label" htmlFor="extraNumber">Число</label>
+                        <input className="profile-page__input" id="extraNumber" type="number"/>
+                    </div>
+                    <div className="profile-page__field">
+                        <label className="profile-page__label" htmlFor="file">Файл</label>
+                        <input className="profile-page__input" id="file" type="file"/>
+                    </div>
+                </>
+            )}
         </div>
 
         <div className="profile-page__field">
